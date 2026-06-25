@@ -1,0 +1,29 @@
+{
+    "case_id": "scenario-breathing-difficulty",
+    "description": "呼吸困难红旗风险病例",
+    "turns": [
+      "我今天突然觉得喘不上气，呼吸有点困难。",
+      "大概持续了半小时，活动一下更明显，现在说话也有点费劲。",
+      "严重程度我觉得8分，我45岁，女，有哮喘病史，平时有吸入药。"
+    ],
+    "run_triage": true,
+    "run_report": false,
+    "expected": {
+      "missing_fields_empty": true,
+      "status_one_of": ["ready_for_triage", "triaged", "reported"],
+      "red_flags_contains": ["breathing_difficulty"],
+      "facts": {
+        "age": 45,
+        "sex": "女",
+        "chief_complaint_contains": "喘",
+        "duration_contains": "半小时",
+        "severity_contains": "8",
+        "medical_history_contains": ["哮喘"],
+        "medications_contains": ["吸入药"]
+      },
+      "triage": {
+        "risk_level_one_of": ["urgent", "high"],
+        "departments_contains": ["急诊科"]
+      }
+    }
+  }

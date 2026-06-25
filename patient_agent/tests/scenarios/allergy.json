@@ -1,0 +1,28 @@
+{
+    "case_id": "scenario-allergy",
+    "description": "过敏反应风险病例",
+    "turns": [
+      "我吃完海鲜后全身起了很多红疹，特别痒。",
+      "大概半小时开始的，现在感觉嘴唇有点肿，喉咙也不太舒服。",
+      "严重程度大概6分，我30岁，女，以前对虾过敏。"
+    ],
+    "run_triage": true,
+    "run_report": false,
+    "expected": {
+      "missing_fields_empty": true,
+      "status_one_of": ["ready_for_triage", "triaged", "reported"],
+      "red_flags_contains": ["allergic_reaction"],
+      "facts": {
+        "age": 30,
+        "sex": "女",
+        "chief_complaint_contains": "红疹",
+        "duration_contains": "半小时",
+        "severity_contains": "6",
+        "allergies_contains": ["虾"]
+      },
+      "triage": {
+        "risk_level_one_of": ["urgent", "high", "medium"],
+        "departments_contains": ["急诊科"]
+      }
+    }
+  }

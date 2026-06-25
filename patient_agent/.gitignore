@@ -1,0 +1,25 @@
+﻿# Windows
+Thumbs.db
+Desktop.ini
+
+# Logs
+*.log
+
+# Environment / secrets
+.env
+.env.local
+*.key
+*.pem
+
+# Dependencies
+node_modules/
+vendor/
+
+# Build outputs
+dist/
+build/
+out/
+
+# IDE
+.vscode/
+.idea/

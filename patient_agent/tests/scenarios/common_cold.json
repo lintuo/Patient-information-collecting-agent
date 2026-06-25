@@ -1,0 +1,27 @@
+{
+    "case_id": "scenario-common-cold",
+    "description": "普通上呼吸道症状低风险病例",
+    "turns": [
+      "我这两天有点咳嗽，嗓子疼，还有点流鼻涕。",
+      "大概从前天晚上开始的，症状不算特别严重，疼痛大概3分。",
+      "我28岁，男，没有什么慢性病，也没有药物过敏。"
+    ],
+    "run_triage": true,
+    "run_report": false,
+    "expected": {
+      "missing_fields_empty": true,
+      "status_one_of": ["ready_for_triage", "triaged", "reported"],
+      "red_flags_contains": [],
+      "facts": {
+        "age": 28,
+        "sex": "男",
+        "chief_complaint_contains": "咳嗽",
+        "duration_contains": "两天",
+        "severity_contains": "3"
+      },
+      "triage": {
+        "risk_level_one_of": ["low", "medium"],
+        "departments_contains_any": ["全科医学科", "呼吸内科", "耳鼻喉科"]
+      }
+    }
+  }

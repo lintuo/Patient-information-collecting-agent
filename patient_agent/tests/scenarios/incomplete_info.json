@@ -1,0 +1,21 @@
+{
+    "case_id": "scenario-incomplete-info",
+    "description": "信息不完整病例，用于测试追问和阻止分诊",
+    "turns": [
+      "我不太舒服。",
+      "主要是头晕。"
+    ],
+    "run_triage": true,
+    "run_report": false,
+    "expected": {
+      "missing_fields_empty": false,
+      "status_one_of": ["collecting"],
+      "red_flags_contains": [],
+      "facts": {
+        "chief_complaint_contains": "头晕"
+      },
+      "triage": {
+        "should_not_exist": true
+      }
+    }
+  }

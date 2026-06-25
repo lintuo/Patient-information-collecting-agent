@@ -1,0 +1,113 @@
+# 病患信息报告
+
+## 病例信息
+
+- Case ID: {{ case.case_id }}
+- 状态: {{ case.status }}
+
+## 主诉
+
+{{ case.facts.chief_complaint or "未提供" }}
+
+## 基本信息
+
+- 年龄: {{ case.facts.age or "未提供" }}
+- 性别: {{ case.facts.sex or "未提供" }}
+
+## 症状信息
+
+- 持续时间: {{ case.facts.duration or "未提供" }}
+- 严重程度: {{ case.facts.severity or "未提供" }}
+
+{% if case.facts.symptoms %}
+### 症状列表
+
+{% for symptom in case.facts.symptoms %}
+- {{ symptom }}
+{% endfor %}
+{% endif %}
+
+## 既往史
+
+{% for item in case.facts.medical_history %}
+- {{ item }}
+{% else %}
+- 未提供
+{% endfor %}
+
+## 用药情况
+
+{% for item in case.facts.medications %}
+- {{ item }}
+{% else %}
+- 未提供
+{% endfor %}
+
+## 过敏史
+
+{% for item in case.facts.allergies %}
+- {{ item }}
+{% else %}
+- 未提供
+{% endfor %}
+
+## 红旗风险
+
+{% for flag in case.red_flags %}
+- {{ flag }}
+{% else %}
+- 暂未识别到明确红旗风险
+{% endfor %}
+
+## 图片分析结果
+
+{% for finding in case.image_findings %}
+- {{ finding }}
+{% else %}
+- 暂无图片分析结果
+{% endfor %}
+
+{% if case.image_findings %}
+{% endif %}
+
+## 语音转写记录
+
+{% for t in case.audio_transcripts %}
+### 转写 #{{ loop.index }}
+
+- 语言: {{ t.language or "未识别" }}
+- 置信度: {{ "%.0f"|format(t.confidence * 100) if t.confidence else "未知" }}%
+- 转写内容: {{ t.transcript }}
+- ASR 模型: {{ t.model or "未知" }}
+- 后端: {{ t.backend or "未知" }}
+- 设备: {{ t.device or "未知" }}
+- 延迟: {{ t.latency_ms }}ms
+{% if t.error_message %}
+- 转写错误: {{ t.error_message }}
+{% endif %}
+{% else %}
+- 暂无语音转写记录
+{% endfor %}
+
+## 分诊建议
+
+{% if case.triage_result %}
+- 风险等级: {{ case.triage_result.risk_level }}
+- 建议科室: {{ case.triage_result.recommended_departments | join(", ") }}
+
+### 分诊总结
+
+{{ case.triage_result.summary }}
+
+### 建议原因
+
+{% for reason in case.triage_result.reasons %}
+- {{ reason }}
+{% endfor %}
+
+### 安全提示
+
+{{ case.triage_result.safety_notice }}
+{% else %}
+尚未生成分诊建议。
+{% endif %}

@@ -1,0 +1,29 @@
+{
+    "case_id": "scenario-chest-pain",
+    "description": "胸痛红旗风险病例",
+    "turns": [
+      "我胸口疼，感觉像被压着一样，已经持续两个小时了。",
+      "疼痛大概7分，走动的时候更明显，还有点出汗。",
+      "我58岁，男，有高血压，平时在吃降压药，没有药物过敏。"
+    ],
+    "run_triage": true,
+    "run_report": false,
+    "expected": {
+      "missing_fields_empty": true,
+      "status_one_of": ["ready_for_triage", "triaged", "reported"],
+      "red_flags_contains": ["chest_pain"],
+      "facts": {
+        "age": 58,
+        "sex": "男",
+        "chief_complaint_contains": "胸",
+        "duration_contains": "两个小时",
+        "severity_contains": "7",
+        "medical_history_contains": ["高血压"],
+        "medications_contains": ["降压药"]
+      },
+      "triage": {
+        "risk_level_one_of": ["urgent", "high"],
+        "departments_contains": ["急诊科"]
+      }
+    }
+  }

@@ -1,0 +1,47 @@
+# 病患信息报告
+
+## 基本信息
+
+- Case ID: {{ case.case_id }}
+- 状态: {{ case.status }}
+
+## 主诉
+
+{{ case.facts.chief_complaint or "未提供" }}
+
+## 症状
+
+{% for symptom in case.facts.symptoms %}
+- {{ symptom }}
+{% else %}
+- 未提供
+{% endfor %}
+
+## 图片分析结果
+
+{% for finding in case.image_findings %}
+- {{ finding }}
+{% else %}
+- 无图片分析结果
+{% endfor %}
+
+## 分诊建议
+
+{% if case.triage_result %}
+- 风险等级: {{ case.triage_result.risk_level }}
+- 建议科室: {{ case.triage_result.recommended_departments | join(", ") }}
+
+{{ case.triage_result.summary }}
+
+### 建议原因
+
+{% for reason in case.triage_result.reasons %}
+- {{ reason }}
+{% endfor %}
+
+### 注意事项
+
+{{ case.triage_result.safety_notice }}
+{% else %}
+尚未生成分诊建议。
+{% endif %}
